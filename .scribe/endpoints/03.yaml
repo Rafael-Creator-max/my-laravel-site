@@ -1,0 +1,333 @@
+name: Categories
+description: |-
+
+  Manage income/expense categories like "Food", "Salary", etc.
+endpoints:
+  -
+    httpMethods:
+      - GET
+    uri: api/categories
+    metadata:
+      groupName: Categories
+      groupDescription: |-
+
+        Manage income/expense categories like "Food", "Salary", etc.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Display a listing of the categories.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+            "message": "Category list",
+            "data": [
+              { "id": 1, "name": "Food", "type": "expense", "icon": "🍔" }
+            ]
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: api/categories
+    metadata:
+      groupName: Categories
+      groupDescription: |-
+
+        Manage income/expense categories like "Food", "Salary", etc.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Store a newly created resource in storage.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: 'The name of the category.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      type:
+        name: type
+        description: 'Either "income" or "expense".'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      icon:
+        name: icon
+        description: 'optional An emoji or CSS icon.'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+    cleanBodyParameters:
+      name: architecto
+      type: architecto
+      icon: architecto
+    fileParameters: []
+    responses:
+      -
+        status: 201
+        content: |-
+          {
+            "message": "Category created",
+            "data": {
+              "id": 2,
+              "name": "Salary",
+              "type": "income",
+            }
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/categories/{id}'
+    metadata:
+      groupName: Categories
+      groupDescription: |-
+
+        Manage income/expense categories like "Food", "Salary", etc.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Display the specified category.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the category.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: 16
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+            "message": "Category details",
+            "data": {
+              "id": 1,
+              "name": "Food",
+              "type": "expense",
+            }
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+      - PATCH
+    uri: 'api/categories/{id}'
+    metadata:
+      groupName: Categories
+      groupDescription: |-
+
+        Manage income/expense categories like "Food", "Salary", etc.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update the specified category in storage.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the category.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: 16
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: 'optional The category name.'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      type:
+        name: type
+        description: 'optional Either "income" or "expense".'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      icon:
+        name: icon
+        description: 'optional An icon.'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+    cleanBodyParameters:
+      name: architecto
+      type: architecto
+      icon: architecto
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+            "message": "Category updated",
+            "data": {
+              "id": 1,
+              "name": "Food",
+              "type": "expense",
+            }
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - DELETE
+    uri: 'api/categories/{id}'
+    metadata:
+      groupName: Categories
+      groupDescription: |-
+
+        Manage income/expense categories like "Food", "Salary", etc.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Remove the specified category from storage.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the category.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: 16
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+            "message": "Category deleted",
+            "data": {
+              "id": 1,
+              "name": "Food",
+              "type": "expense",
+            }
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
