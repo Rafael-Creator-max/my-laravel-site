@@ -24,4 +24,5 @@ return new class extends Migration
         Schema::table('categories', function (Blueprint $table) {
             $table->renameColumn('category_type', 'type');
         });
+    }
 };
