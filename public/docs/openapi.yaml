@@ -1,0 +1,783 @@
+openapi: 3.0.3
+info:
+  title: 'Laravel API Documentation'
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: 'https://my-laravel-site.ddev.site'
+tags:
+  -
+    name: Categories
+    description: "\nManage income/expense categories like \"Food\", \"Salary\", etc."
+  -
+    name: Endpoints
+    description: ''
+  -
+    name: Transactions
+    description: "\nManage income and expense transactions for wallets."
+  -
+    name: Wallets
+    description: "\nAPIs for managing financial wallets (CRUD).\nThis group includes endpoints to list, create, view, update, and delete wallets."
+paths:
+  /api/categories:
+    get:
+      summary: 'Display a listing of the categories.'
+      operationId: displayAListingOfTheCategories
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Category list'
+                  data:
+                    -
+                      id: 1
+                      name: Food
+                      type: expense
+                      icon: 🍔
+                properties:
+                  message:
+                    type: string
+                    example: 'Category list'
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 1
+                        name: Food
+                        type: expense
+                        icon: 🍔
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: Food
+                        type:
+                          type: string
+                          example: expense
+                        icon:
+                          type: string
+                          example: 🍔
+      tags:
+        - Categories
+      security: []
+    post:
+      summary: 'Store a newly created resource in storage.'
+      operationId: storeANewlyCreatedResourceInStorage
+      description: ''
+      parameters: []
+      responses:
+        201:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n  \"message\": \"Category created\",\n  \"data\": {\n    \"id\": 2,\n    \"name\": \"Salary\",\n    \"type\": \"income\",\n  }\n}"
+      tags:
+        - Categories
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'The name of the category.'
+                  example: architecto
+                  nullable: false
+                type:
+                  type: string
+                  description: 'Either "income" or "expense".'
+                  example: architecto
+                  nullable: false
+                icon:
+                  type: string
+                  description: 'optional An emoji or CSS icon.'
+                  example: architecto
+                  nullable: true
+              required:
+                - name
+                - type
+      security: []
+  '/api/categories/{id}':
+    get:
+      summary: 'Display the specified category.'
+      operationId: displayTheSpecifiedCategory
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n  \"message\": \"Category details\",\n  \"data\": {\n    \"id\": 1,\n    \"name\": \"Food\",\n    \"type\": \"expense\",\n  }\n}"
+      tags:
+        - Categories
+      security: []
+    put:
+      summary: 'Update the specified category in storage.'
+      operationId: updateTheSpecifiedCategoryInStorage
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n  \"message\": \"Category updated\",\n  \"data\": {\n    \"id\": 1,\n    \"name\": \"Food\",\n    \"type\": \"expense\",\n  }\n}"
+      tags:
+        - Categories
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'optional The category name.'
+                  example: architecto
+                  nullable: false
+                type:
+                  type: string
+                  description: 'optional Either "income" or "expense".'
+                  example: architecto
+                  nullable: false
+                icon:
+                  type: string
+                  description: 'optional An icon.'
+                  example: architecto
+                  nullable: true
+      security: []
+    delete:
+      summary: 'Remove the specified category from storage.'
+      operationId: removeTheSpecifiedCategoryFromStorage
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n  \"message\": \"Category deleted\",\n  \"data\": {\n    \"id\": 1,\n    \"name\": \"Food\",\n    \"type\": \"expense\",\n  }\n}"
+      tags:
+        - Categories
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the category.'
+        example: 16
+        required: true
+        schema:
+          type: integer
+  /api/user:
+    get:
+      summary: ''
+      operationId: getApiUser
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+  /api/transactions:
+    get:
+      summary: 'Display a listing of the transaction with filtering.'
+      operationId: displayAListingOfTheTransactionWithFiltering
+      description: ''
+      parameters:
+        -
+          in: query
+          name: wallet_id
+          description: 'Filter by wallet ID.'
+          example: 16
+          required: false
+          schema:
+            type: integer
+            description: 'Filter by wallet ID.'
+            example: 16
+            nullable: false
+        -
+          in: query
+          name: category_id
+          description: 'Filter by category ID.'
+          example: 16
+          required: false
+          schema:
+            type: integer
+            description: 'Filter by category ID.'
+            example: 16
+            nullable: false
+        -
+          in: query
+          name: type
+          description: 'Filter by transaction type (e.g. deposit, withdrawal).'
+          example: architecto
+          required: false
+          schema:
+            type: string
+            description: 'Filter by transaction type (e.g. deposit, withdrawal).'
+            example: architecto
+            nullable: false
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Filtered transaction list'
+                  data:
+                    -
+                      id: 1
+                      wallet_id: 1
+                      category_id: 2
+                      type: deposit
+                      amount: 50.0
+                      description: Paycheck
+                properties:
+                  message:
+                    type: string
+                    example: 'Filtered transaction list'
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 1
+                        wallet_id: 1
+                        category_id: 2
+                        type: deposit
+                        amount: 50
+                        description: Paycheck
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        wallet_id:
+                          type: integer
+                          example: 1
+                        category_id:
+                          type: integer
+                          example: 2
+                        type:
+                          type: string
+                          example: deposit
+                        amount:
+                          type: number
+                          example: 50.0
+                        description:
+                          type: string
+                          example: Paycheck
+      tags:
+        - Transactions
+      security: []
+    post:
+      summary: 'Store a newly created transaction in storage.'
+      operationId: storeANewlyCreatedTransactionInStorage
+      description: ''
+      parameters: []
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Transaction created'
+                  data:
+                    id: 4
+                    wallet_id: 1
+                    type: withdrawal
+                    amount: 30.0
+                    description: Groceries
+                properties:
+                  message:
+                    type: string
+                    example: 'Transaction created'
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 4
+                      wallet_id:
+                        type: integer
+                        example: 1
+                      type:
+                        type: string
+                        example: withdrawal
+                      amount:
+                        type: number
+                        example: 30.0
+                      description:
+                        type: string
+                        example: Groceries
+      tags:
+        - Transactions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                wallet_id:
+                  type: integer
+                  description: 'The wallet this transaction belongs to.'
+                  example: 16
+                  nullable: false
+                category_id:
+                  type: integer
+                  description: 'optional The category of the transaction.'
+                  example: 16
+                  nullable: true
+                type:
+                  type: string
+                  description: 'The transaction type (deposit or withdrawal).'
+                  example: architecto
+                  nullable: false
+                amount:
+                  type: number
+                  description: 'The amount of the transaction.'
+                  example: 4326.41688
+                  nullable: false
+                description:
+                  type: string
+                  description: 'optional Description of the transaction.'
+                  example: 'Eius et animi quos velit et.'
+                  nullable: true
+              required:
+                - wallet_id
+                - type
+                - amount
+      security: []
+  '/api/transactions/{id}':
+    get:
+      summary: 'Display the specified transaction.'
+      operationId: displayTheSpecifiedTransaction
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Transaction details'
+                  data:
+                    id: 1
+                    wallet_id: 1
+                    type: deposit
+                    amount: 100.0
+                    description: Bonus
+                properties:
+                  message:
+                    type: string
+                    example: 'Transaction details'
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      wallet_id:
+                        type: integer
+                        example: 1
+                      type:
+                        type: string
+                        example: deposit
+                      amount:
+                        type: number
+                        example: 100.0
+                      description:
+                        type: string
+                        example: Bonus
+      tags:
+        - Transactions
+      security: []
+    put:
+      summary: 'Update the specified transaction in storage.'
+      operationId: updateTheSpecifiedTransactionInStorage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Transactions
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                wallet_id:
+                  type: string
+                  description: 'The <code>id</code> of an existing record in the wallets table.'
+                  example: null
+                  nullable: false
+                category_id:
+                  type: string
+                  description: 'The <code>id</code> of an existing record in the categories table.'
+                  example: null
+                  nullable: true
+                type:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                amount:
+                  type: number
+                  description: ''
+                  example: 4326.41688
+                  nullable: false
+                description:
+                  type: string
+                  description: ''
+                  example: 'Eius et animi quos velit et.'
+                  nullable: true
+      security: []
+    delete:
+      summary: 'Remove the specified transaction from storage.'
+      operationId: removeTheSpecifiedTransactionFromStorage
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Transaction deleted'
+                  data:
+                    id: 1
+                    wallet_id: 1
+                    type: withdrawal
+                    amount: 20.0
+                    description: Lunch
+                properties:
+                  message:
+                    type: string
+                    example: 'Transaction deleted'
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      wallet_id:
+                        type: integer
+                        example: 1
+                      type:
+                        type: string
+                        example: withdrawal
+                      amount:
+                        type: number
+                        example: 20.0
+                      description:
+                        type: string
+                        example: Lunch
+      tags:
+        - Transactions
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the transaction.'
+        example: 16
+        required: true
+        schema:
+          type: integer
+  /api/wallets:
+    get:
+      summary: 'Display a listing of wallets with optional filters.'
+      operationId: displayAListingOfWalletsWithOptionalFilters
+      description: ''
+      parameters:
+        -
+          in: query
+          name: type
+          description: 'Filter by wallet type (e.g. cash, bank, crypto).'
+          example: architecto
+          required: false
+          schema:
+            type: string
+            description: 'Filter by wallet type (e.g. cash, bank, crypto).'
+            example: architecto
+            nullable: false
+        -
+          in: query
+          name: currency
+          description: 'Filter by currency code (e.g. USD, EUR).'
+          example: architecto
+          required: false
+          schema:
+            type: string
+            description: 'Filter by currency code (e.g. USD, EUR).'
+            example: architecto
+            nullable: false
+        -
+          in: query
+          name: min_balance
+          description: 'Minimum wallet balance.'
+          example: 4326.41688
+          required: false
+          schema:
+            type: number
+            description: 'Minimum wallet balance.'
+            example: 4326.41688
+            nullable: false
+        -
+          in: query
+          name: max_balance
+          description: 'Maximum wallet balance.'
+          example: 4326.41688
+          required: false
+          schema:
+            type: number
+            description: 'Maximum wallet balance.'
+            example: 4326.41688
+            nullable: false
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Filtered wallet list'
+                  data:
+                    -
+                      id: 1
+                      name: 'Cash Wallet'
+                      balance: 100.0
+                      currency: USD
+                      type: cash
+                properties:
+                  message:
+                    type: string
+                    example: 'Filtered wallet list'
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 1
+                        name: 'Cash Wallet'
+                        balance: 100
+                        currency: USD
+                        type: cash
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: 'Cash Wallet'
+                        balance:
+                          type: number
+                          example: 100.0
+                        currency:
+                          type: string
+                          example: USD
+                        type:
+                          type: string
+                          example: cash
+      tags:
+        - Wallets
+      security: []
+    post:
+      summary: 'Store a newly created wallet in storage.'
+      operationId: storeANewlyCreatedWalletInStorage
+      description: ''
+      parameters: []
+      responses:
+        201:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n  \"id\": 3,\n  \"name\": \"Crypto Wallet\",\n  \"balance\": 1200.00,\n  \"currency\": \"USD\",\n  \"type\": \"crypto\",\n}"
+      tags:
+        - Wallets
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'The wallet name.'
+                  example: architecto
+                  nullable: false
+                balance:
+                  type: number
+                  description: 'The current balance.'
+                  example: 4326.41688
+                  nullable: false
+                currency:
+                  type: string
+                  description: 'The currency code (e.g. USD).'
+                  example: architecto
+                  nullable: false
+                type:
+                  type: string
+                  description: 'The wallet type (e.g. cash, crypto).'
+                  example: architecto
+                  nullable: false
+                category_id:
+                  type: string
+                  description: 'The <code>id</code> of an existing record in the categories table.'
+                  example: null
+                  nullable: true
+              required:
+                - name
+                - balance
+                - currency
+                - type
+      security: []
+  '/api/wallets/{id}':
+    get:
+      summary: 'Display the specified wallet.'
+      operationId: displayTheSpecifiedWallet
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 1
+                  name: 'Cash Wallet'
+                  balance: 100.0
+                  currency: USD
+                  type: cash
+                  notes: null
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: 'Cash Wallet'
+                  balance:
+                    type: number
+                    example: 100.0
+                  currency:
+                    type: string
+                    example: USD
+                  type:
+                    type: string
+                    example: cash
+                  notes:
+                    type: string
+                    example: null
+      tags:
+        - Wallets
+      security: []
+    put:
+      summary: 'Update the specified wallet in storage.'
+      operationId: updateTheSpecifiedWalletInStorage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Wallets
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'optional The wallet name.'
+                  example: architecto
+                  nullable: false
+                balance:
+                  type: number
+                  description: 'optional The current balance.'
+                  example: 4326.41688
+                  nullable: false
+                currency:
+                  type: string
+                  description: 'optional The currency code.'
+                  example: architecto
+                  nullable: false
+                type:
+                  type: string
+                  description: 'optional The wallet type.'
+                  example: architecto
+                  nullable: false
+      security: []
+    delete:
+      summary: 'Remove the specified wallet from storage.'
+      operationId: removeTheSpecifiedWalletFromStorage
+      description: '@urlParam id integer required The ID of the wallet.'
+      parameters: []
+      responses:
+        204:
+          description: ''
+      tags:
+        - Wallets
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the wallet.'
+        example: 16
+        required: true
+        schema:
+          type: integer
